@@ -1,6 +1,8 @@
 load(qt_build_config)
 load(qt_parts)
 
+WEBENGINE_CONFIG+=use_proprietary_codecs
+
 OTHER_FILES = \
     tools/buildscripts/* \
     tools/scripts/* \
