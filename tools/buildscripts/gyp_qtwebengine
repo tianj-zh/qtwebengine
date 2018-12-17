@@ -82,6 +82,11 @@ def purifyGypVarPath(path):
   # Python is able to understand mixed slash paths anyway, so don't use backslashes.
   return path.replace('\\', '/')
 
+def relativeOutputDirPath(output_dir):
+    if os.path.splitdrive(output_dir)[0] == os.path.splitdrive(qtwebengine_root)[0]:
+        return os.path.relpath(output_dir, qtwebengine_root)
+    return output_dir
+    
 if __name__ == '__main__':
   output_dir = sys.argv[1]
   if not os.path.isdir(output_dir):
@@ -155,7 +160,7 @@ if __name__ == '__main__':
 
   # Tweak the output location and format (hardcode ninja for now if not set)
   args.extend(['--generator-output', '.'])
-  args.extend(['-Goutput_dir='+ purifyGypVarPath(os.path.relpath(output_dir, qtwebengine_root))])
+  args.extend(['-Goutput_dir='+ purifyGypVarPath(relativeOutputDirPath(output_dir))])
 
   # Tell gyp not to try finding cl.exe on Windows, Qt already requires the env to be set prior to the build.
   args.extend(['-G', 'ninja_use_custom_environment_files'])
