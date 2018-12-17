@@ -84,7 +84,7 @@ def purifyGypVarPath(path):
 
 def relativeOutputDirPath(output_dir):
     if os.path.splitdrive(output_dir)[0] == os.path.splitdrive(qtwebengine_root)[0]:
-        return os.path.relpath(output_dir, qtwebengine_root)
+        return purifyGypVarPath(os.path.relpath(output_dir, qtwebengine_root))
     return output_dir
     
 if __name__ == '__main__':
@@ -160,7 +160,7 @@ if __name__ == '__main__':
 
   # Tweak the output location and format (hardcode ninja for now if not set)
   args.extend(['--generator-output', '.'])
-  args.extend(['-Goutput_dir='+ purifyGypVarPath(relativeOutputDirPath(output_dir))])
+  args.extend(['-Goutput_dir='+ relativeOutputDirPath(output_dir)])
 
   # Tell gyp not to try finding cl.exe on Windows, Qt already requires the env to be set prior to the build.
   args.extend(['-G', 'ninja_use_custom_environment_files'])
