@@ -84,7 +84,7 @@ def purifyGypVarPath(path):
 
 def relativeOutputDirPath(output_dir):
     if os.path.splitdrive(output_dir)[0] == os.path.splitdrive(qtwebengine_root)[0]:
-        return purifyGypVarPath(os.path.relpath(output_dir, qtwebengine_root))
+        return os.path.relpath(output_dir, qtwebengine_root)
     return output_dir
     
 if __name__ == '__main__':
